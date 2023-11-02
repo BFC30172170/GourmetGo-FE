@@ -1,8 +1,35 @@
-# Getting Started with Create React App
+# GourmetGo Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+GourmetGo is a Proof of Concept application for a mock food delivery app showcasing features of a Rich Internet Application (RIA) and Progressive Web App (PWA)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
-## Available Scripts
+## Getting Started
+
+To experience the full application capability the front-end should also be run in conjunction with this and can be found here: [GourmetGo_Server](https://github.com/zgl112/GourmetGo_Server)
+
+### Prerequisites
+
+Node is Required to run this project. [Node](https://nodejs.org/en) version 20.9.0 recommended
+bash is recommended to run basic scripts. gitbash for windows can be downloaded from here: [gitforwindows](https://gitforwindows.org/)
+
+### Installation
+
+To clone the repository, navigate to the project directory, install the dependencies and run the project, run the following in a bash terminal:
+
+```
+git clone https://github.com/BFC30172170/GourmetGo-FE.git
+cd GourmetGo-FE
+npm i
+npm run start
+```
+
+To create and serve a production build from within the project directory run the following in a bash terminal
+
+```
+npm install -g serve
+serve -s build
+```
+## React Scripts
 
 In the project directory, you can run:
 
@@ -39,32 +66,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
