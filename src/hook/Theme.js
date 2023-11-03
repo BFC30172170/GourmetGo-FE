@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useTheme() {
-    const [theme, setTheme] = useState(localStorage.theme);
+    const [theme, setTheme] = useState(localStorage.theme || 'light');
   
     useEffect(() => {
       const oldTheme = theme === 'dark' ? 'light' : 'dark';
