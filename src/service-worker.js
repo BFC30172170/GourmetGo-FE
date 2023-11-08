@@ -74,7 +74,7 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 registerRoute(
-  ({url}) => url.origin === 'https://jsonplaceholder.typicode.com' || url.origin === 'https://api.postcodes.io',
+  ({url}) => url.origin === 'https://654a0134e182221f8d524e9c.mockapi.io' || url.origin === 'https://api.postcodes.io',
   new StaleWhileRevalidate({
     cacheName: 'todoapiresponse',
     plugins: [
