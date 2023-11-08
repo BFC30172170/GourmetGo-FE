@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from '../location';
+import { Link } from 'react-router-dom';
+import { PencilIcon } from '@heroicons/react/24/solid';
 
 function RestaurantIndex() {
     const [restaurants, setRestaurants] = useState([]);
@@ -10,10 +12,11 @@ function RestaurantIndex() {
     const location = useLocation();
 
     const getRestaurants = async () => {
+
         const res = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/Restaurants');
         const json = await res.json();
         let restaurants = json;
-        restaurants = restaurants.filter((restaurant) => restaurant.name.indexOf(search) > -1)
+        restaurants = restaurants.filter((restaurant) => restaurant.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
         if (filters.length > 0) {
             restaurants = restaurants.filter((restaurant) => filters.includes(restaurant.category))
         }
@@ -22,15 +25,22 @@ function RestaurantIndex() {
     };
 
     useEffect(() => {
+        const timer = setTimeout(()=>{
         getRestaurants();
+        return;
+        },350)
+        return ()=>clearTimeout(timer);
     }, [filters, search, sort])
 
     useEffect(() => {
-        const cats = getDistinctCategories(restaurants);
-        setCategories(cats);
+        if (categories.length < 1) {
+            const cats = getDistinctCategories(restaurants);
+            setCategories(cats);
+        }
+
     }, [restaurants])
 
-    function haversineDistance(coords1, coords2, isMiles) {
+    const haversineDistance = (coords1, coords2, isMiles) => {
         function toRad(x) {
             return x * Math.PI / 180;
         }
@@ -57,7 +67,8 @@ function RestaurantIndex() {
         return d.toFixed(0);
     }
 
-    function getDistinctCategories(objects) {
+    const getDistinctCategories = (objects) => {
+
         let unique_values = objects
             .map((item) => item.category)
             .filter(
@@ -70,10 +81,11 @@ function RestaurantIndex() {
             newCat.count = restaurants.filter((restaurant) => restaurant.category == cat).length;
             cats.push(newCat);
         });
+        cats.sort((a,b) => b.count - a.count)
         return cats;
     }
 
-    async function handleFilter(e, i) {
+    const handleFilter = async (e, i) => {
         if (filters.includes(e.target.value)) {
             const newFilters = filters.slice();
             const index = newFilters.indexOf(e.target.value);
@@ -91,10 +103,10 @@ function RestaurantIndex() {
         <div className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 pt-32 min-h-screen">
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-3 lg:grid-cols-4 gap-4">
                 <div className='hidden lg:block col-span-1 row-span-1'></div>
-                <div className='col-span-3'> <h1 className="text-4xl font-bold tracking-tight">Restaurants near <span className='text-red-500'>{location.postcode}</span></h1></div>
+                <div className='col-span-3'> <h1 className="text-4xl font-bold tracking-tight flex items-center">Restaurants near <span className='text-red-500 flex items-center gap-1 pl-4'><Link to="/" className='duration-300 hover:-rotate-12 hover:scale-110'><PencilIcon className='w-6 h-6'/></Link>{location.area}, {location.postcode}</span></h1></div>
 
                 <section aria-labelledby="products-heading" className="hidden lg:block col-span-1 row-span-4 rounded-2xl  ">
-                    <form className=" bg-white dark:bg-gray-900 p-4 rounded-lg">
+                    <form className=" bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
                         <h3 className="sr-only">Categories</h3>
                         <div>
                             <h3 className="-my-3 flow-root">
@@ -109,8 +121,8 @@ function RestaurantIndex() {
                                     {categories.map((category, i) => {
                                         return (
                                             <div className="flex items-center" key={category.name}>
-                                                <input id="filter-color-0" name="color[]" onChange={(e) => { handleFilter(e, i) }} value={category.name} type="checkbox" className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                                                <label htmlFor="filter-color-0" className="ml-3 text-sm">{category.name} {category.count}</label>
+                                                <input id={`filter-category-${category.name}`} name="category[]" onChange={(e) => { handleFilter(e, i) }} value={category.name} type="checkbox" className="h-4 w-4 rounded border-gray-50 text-red-500 focus:ring-red-500 accent-red-500" />
+                                                <label htmlFor={`filter-category-${category.name}`} className="ml-3 text-sm">{category.name} {category.count}</label>
                                             </div>
                                         )
                                     })}
@@ -122,7 +134,7 @@ function RestaurantIndex() {
                 </section>
                 <section className="flex items-baseline justify-between col-span-3">
                     {/* Search*/}
-                    <input className='p-2 pl-6 rounded-2xl bg-gray-50 dark:bg-gray-900 w-full' placeholder='Search for a Restaurant' value={search} onChange={(e) => { setSearch(e.target.value) }} />
+                    <input className='p-2 pl-6 rounded-2xl bg-gray-100 dark:bg-gray-900 w-full' placeholder='Search for a Restaurant' value={search} onChange={(e) => { setSearch(e.target.value) }} />
 
                 </section>
 
@@ -134,7 +146,7 @@ function RestaurantIndex() {
                         <div className="w-full mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4">
                             {restaurants.map((restaurant, i) => {
                                 return (
-                                    <a href="#" className="group" key={i}>
+                                    <Link to={`/restaurants/${restaurant.id}`} className="group" key={i}>
                                         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-500 xl:aspect-h-8 xl:aspect-w-7">
                                             <img src={restaurant.image} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="h-full w-full object-cover object-center group-hover:opacity-75" />
                                         </div>
@@ -142,7 +154,7 @@ function RestaurantIndex() {
                                             <h3 className="text-sm">{restaurant.name}</h3>
                                             <p className="text-sm font-medium text-right">{haversineDistance([restaurant.longitude, restaurant.latitude], [-3.020520, 53.809350])}km away</p>
                                         </div>
-                                    </a>
+                                    </Link>
                                 )
                             })}
                         </div>
