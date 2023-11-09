@@ -12,7 +12,6 @@ function RestaurantIndex() {
     const location = useLocation();
 
     const getRestaurants = async () => {
-
         const res = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/Restaurants');
         const json = await res.json();
         let restaurants = json;
