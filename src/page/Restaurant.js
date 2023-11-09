@@ -6,6 +6,7 @@ import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid
 function Restaurant() {
     const [restaurant, setRestaurant] = useState();
     const [products, setProducts] = useState([]);
+    const [search, setSearch] = useState('');
     const { id } = useParams();
 
     const getRestaurant = async () => {
@@ -17,12 +18,17 @@ function Restaurant() {
         const res2 = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/products')
         const json2 = await res2.json();
         let products = json2;
+        products = products.filter((product) => product.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
         setProducts(products);
     };
 
     useEffect(() => {
-        getRestaurant();
-    }, [])
+        const timer = setTimeout(()=>{
+            getRestaurant();
+            return;
+            },350)
+            return ()=>clearTimeout(timer);
+    }, [search])
 
     return (
         <div className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 pt-32 min-h-screen">
@@ -53,7 +59,7 @@ function Restaurant() {
                 </section>
                 <section className="flex items-baseline justify-between col-span-3">
                     {/* Search*/}
-                    <input className='p-2 pl-6 rounded-2xl bg-gray-100 dark:bg-gray-900 w-full' placeholder={`Search ${restaurant?.name}'s menu`} />
+                    <input className='p-2 pl-6 rounded-2xl bg-gray-100 dark:bg-gray-900 w-full' placeholder={`Search ${restaurant?.name}'s menu`} value={search} onChange={(e) => { setSearch(e.target.value) }} />
 
                 </section>
 
