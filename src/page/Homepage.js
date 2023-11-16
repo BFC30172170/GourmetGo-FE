@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import {CheckIcon, MapPinIcon} from '@heroicons/react/24/solid';
-import { useLocation } from "../location";
 import { Link } from "react-router-dom";
+
+import { useLocation } from "lib/location";
 
 function HomePage() {
     const location = useLocation();
@@ -27,7 +28,7 @@ function HomePage() {
     return (
         <div class="relative text-gray-900 dark:text-gray-50 pt-64 mx-auto transition duration-300 h-screen w-screen">
             <div className="max-w-7xl mx-auto  p-6 lg:px-8">
-                <h1 class="text-4xl font-bold tracking-tight sm:text-6xl font-bold">Gourmet <span className="text-red-600">Go</span></h1>
+                <h1 class="text-4xl tracking-tight sm:text-6xl font-bold">Gourmet <span className="text-red-600">Go</span></h1>
                 <p class="mt-2 mb-2 text-lg leading-8">Order delivery near you.</p>
                 <div class="h-12 w-full bg-gray-50 dark:bg-gray-900 rounded-2xl flex pl-2 max-w-2xl">
                     <button className="hover:scale-110 duration-300"onClick={() => {location.getGeolocation()}}><MapPinIcon class="h-6 w-6 text-red-600 mr-2" /></button> 

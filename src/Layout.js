@@ -1,10 +1,11 @@
-import logodark from './logo-dark.svg';
-import logolight from './logo-light.svg';
 import { UserIcon, MoonIcon, ShoppingCartIcon, SunIcon } from '@heroicons/react/24/solid';
-import useTheme from './hook/Theme';
 import { useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { useLocation } from './location';
+
+import { useLocation } from 'lib/location';
+import useTheme from 'lib/theme';
+import logodark from 'logo-dark.svg';
+import logolight from 'logo-light.svg';
 
 function Layout() {
     const [theme, setTheme] = useTheme();

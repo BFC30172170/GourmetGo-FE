@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
-import { useLocation } from '../location';
-import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/24/solid';
+import { useParams } from "react-router-dom";
 
 function Restaurant() {
     const [restaurant, setRestaurant] = useState();

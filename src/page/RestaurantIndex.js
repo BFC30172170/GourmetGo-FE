@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from '../location';
 import { Link } from 'react-router-dom';
 import { PencilIcon } from '@heroicons/react/24/solid';
+
+import { useLocation } from 'lib/location';
 
 function RestaurantIndex() {
     const [restaurants, setRestaurants] = useState([]);
