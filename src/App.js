@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 
 import { LocationProvider } from "lib/location";
+import { AuthProvider } from "lib/auth";
 import Homepage from 'page/Homepage';
 import RestaurantIndex from 'page/RestaurantIndex';
 import Restaurant from 'page/Restaurant';
@@ -19,7 +20,7 @@ function App() {
   return (
     <div>
       <LocationProvider>
-        {/* <Layout> */}
+        <AuthProvider>
           <Router>
             <Routes>
               <Route path="/" element={<Layout/>}>
@@ -31,7 +32,7 @@ function App() {
               </Route>
             </Routes>
           </Router>
-        {/* </Layout> */}
+          </AuthProvider>
       </LocationProvider>
     </div>
 

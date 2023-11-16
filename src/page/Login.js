@@ -1,11 +1,11 @@
+import { useAuth } from 'lib/auth';
 import { useState } from 'react';
 
 function Login() {
-    const [forename, setForename] = useState('');
-    const [surname, setSurname] = useState('');
+    const auth = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
+
     
     return (
         <div className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 pt-32 min-h-screen">
@@ -28,7 +28,7 @@ function Login() {
                             </div>
                             
 
-                            <button type='submit' className='bg-red-500 col-span-2 p-4 rounded-lg text-lg font-bold'>Submit</button>
+                            <button type='submit' className='bg-red-500 col-span-2 p-4 rounded-lg text-lg font-bold' onClick={(e)=>{auth.login(email,password)}}>Submit</button>
                         </form>
                     </div>
 
