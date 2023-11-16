@@ -1,3 +1,4 @@
+import { useBasket } from 'lib/basket';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 
@@ -6,6 +7,7 @@ function Restaurant() {
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const { id } = useParams();
+    const basket = useBasket();
 
     const getRestaurant = async () => {
         const res = await fetch(`https://654a0134e182221f8d524e9c.mockapi.io/Restaurants/${id}`);
@@ -44,6 +46,11 @@ function Restaurant() {
                                 <button type="button" className="flex w-full items-center justify-between py-3 text-sm  hover:" aria-controls="filter-section-0" aria-expanded="false">
                                     <span className="font-bold">Basket</span>
                                 </button>
+                                {basket.items.map((item,i) => {
+                                        return(
+                                            <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{item.name} - £{item.price}</a>
+                                        )
+                                    })}     
                             </h3>
 
                             <div className="pt-6" id="filter-section-0">
@@ -67,7 +74,7 @@ function Restaurant() {
                         <div className="w-full mx-auto grid grid-cols-1 gap-4">
                             {products.map((product,i) => {
                                 return (
-                                    <div className="group flex">
+                                    <div className="group flex" onClick={(e)=>{basket.addToBasket(restaurant,product)}}>
                                         <div>
                                         <div className=" h-full w-16 sm:w-24 lg:w-48 overflow-hidden rounded-lg bg-gray-500">
                                             <img src={product.image} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="h-full w-full object-cover object-center group-hover:opacity-75" />

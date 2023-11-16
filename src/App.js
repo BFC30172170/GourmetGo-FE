@@ -6,6 +6,7 @@ import {
 
 import { LocationProvider } from "lib/location";
 import { AuthProvider } from "lib/auth";
+import { BasketProvider } from "lib/basket";
 import Homepage from 'page/Homepage';
 import RestaurantIndex from 'page/RestaurantIndex';
 import Restaurant from 'page/Restaurant';
@@ -21,6 +22,7 @@ function App() {
     <div>
       <LocationProvider>
         <AuthProvider>
+          <BasketProvider>
           <Router>
             <Routes>
               <Route path="/" element={<Layout/>}>
@@ -32,6 +34,7 @@ function App() {
               </Route>
             </Routes>
           </Router>
+          </BasketProvider>
           </AuthProvider>
       </LocationProvider>
     </div>
