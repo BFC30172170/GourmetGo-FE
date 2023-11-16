@@ -16,15 +16,14 @@ function useProvideAuth() {
     const [username, setUsername] = useState(localStorage.username || null);
 
     const login = async (username,password) => {
-        console.log('here')
         //const res = await fetch (`login endpoint`);
-        const res = {username:'Test User',jwt:'48e823jr823mdj2'}
+        const res = {username:username,jwt:'48e8dasdasdas',status:'Login Success'}
 
         setUser(res.jwt)
         setUsername(res.username)
         localStorage.setItem('user',res.jwt)
         localStorage.setItem('username',res.username)
-        return {user,username};
+        return {user,username,status:res.status};
     }
 
     const logout = async () => {
