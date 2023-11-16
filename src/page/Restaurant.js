@@ -40,7 +40,7 @@ function Restaurant() {
                 </section>
                 <section className="hidden lg:block col-span-1 row-span-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg h-fit ">
                     <h3 type="button" className="flex w-full items-center justify-between pb-2 text-sm" aria-controls="filter-section-0" aria-expanded="false">
-                        <span className="font-bold">Basket for {basket.restaurant.name}</span>
+                        <span className="font-bold">Basket - {basket?.restaurant?.name}</span>
                     </h3>
                     <div className='flex flex-col'>
                         {basket.items.map((item, i) => {
