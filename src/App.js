@@ -3,13 +3,16 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Homepage from './page/Homepage.js';
-import RestaurantIndex from './page/RestaurantIndex.js';
-import Restaurant from './page/Restaurant.js';
-import Layout from './Layout.js';
-import { LocationProvider } from "./location.js";
-import Signup from "./page/Signup.js";
-import Login from "./page/Login.js";
+
+import { LocationProvider } from "lib/location";
+import { AuthProvider } from "lib/auth";
+import { BasketProvider } from "lib/basket";
+import Homepage from 'page/Homepage';
+import RestaurantIndex from 'page/RestaurantIndex';
+import Restaurant from 'page/Restaurant';
+import Layout from 'Layout';
+import Signup from "page/Signup";
+import Login from "page/Login";
 
 
 
@@ -18,7 +21,8 @@ function App() {
   return (
     <div>
       <LocationProvider>
-        {/* <Layout> */}
+        <AuthProvider>
+          <BasketProvider>
           <Router>
             <Routes>
               <Route path="/" element={<Layout/>}>
@@ -30,7 +34,8 @@ function App() {
               </Route>
             </Routes>
           </Router>
-        {/* </Layout> */}
+          </BasketProvider>
+          </AuthProvider>
       </LocationProvider>
     </div>
 
