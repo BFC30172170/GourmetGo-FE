@@ -12,13 +12,13 @@ export const useBasket = () => {
 };
 
 function useProvideBasket() {
-    const [items, setItems] = useState(JSON.parse(localStorage.items) || []);
-    const [restaurant, setRestaurant] = useState(JSON.parse(localStorage.restaurant) || null);
+    const [items, setItems] = useState(localStorage.items ? JSON.parse(localStorage.items) : []);
+    const [restaurant, setRestaurant] = useState(localStorage.items ? JSON.parse(localStorage.restaurant) : null);
 
     const addToBasket = (itemRestaurant, item) => {
         let newItems = items.slice();
         //If item is from a new restaurant, clear the basket first
-        if (restaurant.id !== itemRestaurant.id){
+        if (restaurant?.id !== itemRestaurant?.id){
             newItems = [];
         }
         newItems.push(item)

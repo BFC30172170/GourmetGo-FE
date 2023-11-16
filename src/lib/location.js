@@ -14,7 +14,7 @@ export const useLocation = () => {
 function useProvideLocation() {
     const [latitude, setLatitude] = useState(localStorage.latitude || null);
     const [longitude, setLongitude] = useState(localStorage.longitude || null);
-    const [postcode, setPostcode] = useState(localStorage.postcode || null)
+    const [postcode, setPostcode] = useState(localStorage.postcode || '')
     const [area, setArea] = useState(localStorage.area || null)
     const [confirmed, setConfirmed] = useState(localStorage.confirmed || null)
 
