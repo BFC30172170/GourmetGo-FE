@@ -94,7 +94,7 @@ registerRoute(
 registerRoute(
   ({url}) => url.origin === 'https://api-server',
   new NetworkOnly({
-    plugins: [bgSyncPlugin]
+    plugins: [bgSync]
   }),
   'POST'
 )
