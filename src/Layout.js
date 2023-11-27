@@ -86,7 +86,7 @@ function Layout() {
                                     })}
                                 </div>
                                 <div class="py-1" role="none">
-                                    <button href="#" onClick={(e) => setCartDropdown(false)} className="px-4 py-2 text-sm bg-red-500 text-gray-50 flex rounded-lg mx-auto w-full text-center" role="menuitem" tabindex="-1" id="menu-item-2">Checkout</button>
+                                    <NavLink to="/checkout" onClick={(e) => setCartDropdown(false)} className="px-4 py-2 text-sm bg-red-500 text-gray-50 flex rounded-lg mx-auto w-full text-center">Checkout</NavLink>
                                 </div>
                             </div>
                         </div>
