@@ -8,6 +8,7 @@ import { useBasket } from 'lib/basket';
 import useTheme from 'lib/theme';
 import logodark from 'logo-dark.svg';
 import logolight from 'logo-light.svg';
+import Offline from 'lib/offline';
 
 function Layout() {
     const [theme, setTheme] = useTheme();
@@ -41,6 +42,7 @@ function Layout() {
     }
     return (
         <div className="relative" onClick={(e) => { handleOffClick(e) }}>
+                        <Offline/>
             <header className="absolute inset-x-0 top-0 z-50 bg-gray-100 dark:bg-gray-900 transition duration-300">
                 <nav className=" max-w-7xl mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Global">
                     <div className="flex lg:flex-1">
