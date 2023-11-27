@@ -13,6 +13,11 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
+import { BackgroundSyncPlugin } from 'workbox-background-sync';
+
+const bgSync = new BackgroundSyncPlugin('syncQueue', {
+   maxRetentionTime: 24 * 60 // retry background requests for max of 24 hours
+})
 
 clientsClaim();
 
@@ -85,3 +90,11 @@ registerRoute(
     ],
   })
 );
+
+registerRoute(
+  ({url}) => url.origin === 'https://api-server',
+  new NetworkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'POST'
+)
