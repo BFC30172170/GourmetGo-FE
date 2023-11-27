@@ -13,6 +13,7 @@ import Restaurant from 'page/Restaurant';
 import Layout from 'Layout';
 import Signup from "page/Signup";
 import Login from "page/Login";
+import Profile from "page/Profile";
 
 
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="restaurants" element={<RestaurantIndex />} />
               <Route path="restaurants/:id" element={<Restaurant/>} />
               <Route path="signup" element={<Signup/>}/>
+              <Route path="profile" element={<Profile/>}/>
               <Route path="login" element={<Login/>}/>
               </Route>
             </Routes>
