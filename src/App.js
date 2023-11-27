@@ -14,6 +14,7 @@ import Layout from 'Layout';
 import Signup from "page/Signup";
 import Login from "page/Login";
 import Profile from "page/Profile";
+import Checkout from "page/Checkout";
 
 
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="signup" element={<Signup/>}/>
               <Route path="profile" element={<Profile/>}/>
               <Route path="login" element={<Login/>}/>
+              <Route path="checkout" element={<Checkout/>}/>
               </Route>
             </Routes>
           </Router>
