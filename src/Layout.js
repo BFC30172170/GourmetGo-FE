@@ -1,106 +1,78 @@
-import { UserIcon, MoonIcon, ShoppingCartIcon, SunIcon } from '@heroicons/react/24/solid';
+import { UserIcon, ShoppingCartIcon, EyeIcon } from '@heroicons/react/24/solid';
 import { useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 
 import { useLocation } from 'lib/location';
 import { useAuth } from 'lib/auth';
 import { useBasket } from 'lib/basket';
-import useTheme from 'lib/theme';
-import logodark from 'logo-dark.svg';
-import logolight from 'logo-light.svg';
-import Offline from 'lib/offline';
+import { useTheme } from 'lib/theme';
+import Offline from 'components/Offline';
+import Logo from 'components/Logo';
+import ThemeToggle from 'components/ThemeToggle';
+import Dropdown from 'components/Dropdown';
+import Basket from 'components/Basket';
 
 function Layout() {
-    const [theme, setTheme] = useTheme();
     const auth = useAuth();
-    const location = useLocation();
     const basket = useBasket();
-    const [userDropdown, setUserDropdown] = useState(false);
-    const [cartDropdown, setCartDropdown] = useState(false);
-    const cartRef = useRef();
-    const userRef = useRef();
-    const toggleTheme = (e) => {
-        if (theme == 'light') {
-            setTheme('dark');
-        } else {
-            setTheme('light');
-        }
-    };
 
-    const handleOffClick = (e) => {
-        if (cartRef && cartRef.current.contains(e.target)) {
-        } else {
-            setCartDropdown(false);
-        }
-        if (userRef && userRef.current.contains(e.target)) {
-
-        } else {
-            setUserDropdown(false);
-        }
-
-
-    }
     return (
-        <div className="relative" onClick={(e) => { handleOffClick(e) }}>
-                        <Offline/>
-            <header className="absolute inset-x-0 top-0 z-50 bg-gray-100 dark:bg-gray-900 transition duration-300">
+        <div className="relative">
+            <Offline />
+            <header className="fixed inset-x-0 top-0 z-50 bg-gray-100 dark:bg-gray-900 transition duration-300">
                 <nav className=" max-w-7xl mx-auto flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-                    <div className="flex lg:flex-1">
-                        <NavLink to={location.postcode !== null ? '/restaurants' : '/'} className="-m-1.5 p-1.5">
-                            <span className="sr-only">GourmetGo</span>
-                            {theme == 'light' ? <img className="h-8 w-auto" src={logolight} alt="" /> : <img className="h-8 w-auto" src={logodark} alt="" />}
-                        </NavLink>
-                    </div>
-
+                    {/* Nav Left */}
+                    <Logo />
+                    {/* Nav Right */}
                     <div className="flex gap-6 text-gray-900 dark:text-gray-50 transition duration-300">
                         {/* User Menu */}
-                        <div ref={userRef} className="text-sm font-semibold leading-6 relative" >
-                            <UserIcon className="w-6 h-6 hover:scale-105 hover:text-red-500 duration-300 cursor-pointer" onClick={(e) => setUserDropdown(!userDropdown)} />
-                            <div class={`absolute ${userDropdown ? "block" : "hidden"}  p-2 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                <div class="py-1 flex flex-col" role="none">
-                                    {auth.user === null ?
-                                        <>
-                                            <NavLink onClick={(e) => setUserDropdown(false)} to="/login" className="block px-4 py-2 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200" role="menuitem" tabindex="-1" id="menu-item-0">Login</NavLink>
-                                            <NavLink onClick={(e) => setUserDropdown(false)} to="/signup" className="block px-4 py-2 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200" role="menuitem" tabindex="-1" id="menu-item-1">Signup</NavLink>
-                                        </>
-                                        :
-                                        <>
-                                            <li onClick={(e) => { setUserDropdown(false); auth.logout() }} className="block px-4 py-2 text-sm rounded-lg cursor-pointer duration-300 dark:hover:bg-gray-800 hover:bg-gray-200" role="menuitem" tabindex="-1" id="menu-item-1">Logout</li>
-                                            <NavLink onClick={(e) => setUserDropdown(false)} to="/profile" className="block px-4 py-2 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200" role="menuitem" tabindex="-1" id="menu-item-2">{auth.username}'s Profile</NavLink>
-                                        </>
-                                    }
-                                </div>
-                            </div>
-                        </div>
+                        <Dropdown
+                            icon={<UserIcon className="w-6 h-6" />}
+                            content={auth.user === null ?
+                                <>
+                                    <NavLink to="/login" className="block px-2 py-2 my-1 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200">Login</NavLink>
+                                    <NavLink to="/signup" className="block px-2 py-2 my-1 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200">Signup</NavLink>
+                                </>
+                                :
+                                <>
+                                    <li onClick={(e) => { auth.logout() }} className="block px-2 py-2 my-1 text-sm rounded-lg cursor-pointer duration-300 dark:hover:bg-gray-800 hover:bg-gray-200">Logout</li>
+                                    <NavLink to="/profile" className="block px-2 py-2 my-1 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200">{auth.username}'s Profile</NavLink>
+                                </>
+                            }
+                        />
 
                         {/* Basket Menu */}
-                        <div ref={cartRef} className="text-sm font-semibold leading-6 relative" onClick={(e) => setCartDropdown(!cartDropdown)}>
-                            <ShoppingCartIcon className="w-6 h-6 hover:scale-105 hover:text-red-500 duration-300 cursor-pointer" />
+                        <Dropdown
+                            icon={<div className='relative'><ShoppingCartIcon className="w-6 h-6">
+
+                            </ShoppingCartIcon>
                             <div className='absolute -right-2 -top-3'>
-                                {basket?.items?.length}
-                                </div>
-                            <div className={`absolute ${cartDropdown ? "block" : "hidden"} p-2 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                                <div className="py-1" role="none">
-                                    {basket.items.map((item, i) => {
-                                        return (
-                                            <a href="#" class="block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">{item.name} - £{item.price}</a>
-                                        )
-                                    })}
-                                </div>
-                                <div class="py-1" role="none">
-                                    <NavLink to="/checkout" onClick={(e) => setCartDropdown(false)} className="px-4 py-2 text-sm bg-red-500 text-gray-50 flex rounded-lg mx-auto w-full text-center">Checkout</NavLink>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#" className="text-sm font-semibold leading-6 hover:scale-105 hover:text-red-500 duration-300 cursor-pointer">{theme == 'light' ? <SunIcon className="w-6 h-6" onClick={(e) => { toggleTheme() }} /> : <MoonIcon className="w-6 h-6" onClick={(e) => { toggleTheme() }} />}</a>
+                                {basket?.items?.reduce((n, { count }) => n + count, 0)}
+                            </div></div>}
+                            content={<Basket/>}
+                        />
+
+                        {/* Theme Menu */}
+                        <ThemeToggle />
                     </div>
                 </nav>
             </header>
 
             <Outlet />
 
-            <footer className='bg-gray-100 dark:bg-gray-900 transition duration-300 h-32 w-full'>
-                footer
+            <footer className='h-32 w-full'>
+                <div class="w-full bg-gray-100 dark:bg-gray-900 transition duration-300  mx-auto p-4 md:py-8">
+                    <div class="sm:flex sm:items-center sm:justify-between">
+                        <Logo />
+                        <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                            <li>
+                                <a href="https://github.com/BFC30172170/GourmetGo-FE" class="hover:underline me-4 md:me-6">Github</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <p className='inline'>GourmetGo™</p>. All Rights Reserved.</span>
+                </div>
             </footer>
 
         </div>

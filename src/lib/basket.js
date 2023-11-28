@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext, createContext } from 'react';
+import { Link } from 'react-router-dom';
 
 const basketContext = createContext();
 
@@ -18,14 +19,44 @@ function useProvideBasket() {
     const addToBasket = (itemRestaurant, item) => {
         let newItems = items.slice();
         //If item is from a new restaurant, clear the basket first
-        if (restaurant?.id !== itemRestaurant?.id){
+        if (restaurant?.id !== itemRestaurant?.id) {
             newItems = [];
         }
-        newItems.push(item)
+        if (newItems.filter(i => i.id == item?.id).length > 0) {
+            let newItem = items.find(i => i.id == item?.id);
+            newItem.count = newItem.count + 1;
+        } else {
+            newItems.push({ count: 1, ...item })
+        }
         setItems(newItems);
         setRestaurant(itemRestaurant);
-        localStorage.setItem('items',JSON.stringify(newItems));
-        localStorage.setItem('restaurant',JSON.stringify(itemRestaurant));
+        localStorage.setItem('items', JSON.stringify(newItems));
+        localStorage.setItem('restaurant', JSON.stringify(itemRestaurant));
+    }
+
+    const show = () => {
+        let total = 0;
+        return (
+            <div className="py-1">
+                <h3 className="flex text-sm pb-2 font-bold border-b-2 border-gray-50/30">Basket - {restaurant?.name}</h3>
+                {items.map((item, i) => {
+                    total += item?.price * item?.count;
+                    return (
+                        <div class="flex py-2 px-1 text-sm justify-between">
+                            <p>{item?.count} * {item.name}</p>
+                            <p>£{item?.price * item?.count}</p>
+                        </div>
+                    )
+                })}
+                <div class="flex py-2 text-sm justify-between border-t-2 border-gray-50/30">
+                    <p className='font-bold'>total</p>
+                    <p>£{total}</p>
+                </div>
+                <Link to="/checkout" className="py-2 flex items-center justify-center bg-red-500 rounded-lg w-full duration-300 hover:scale-105 hover:bg-red-600" role="none">
+                    <p className="">Checkout</p>
+                </Link>
+            </div>
+        )
     }
 
 
@@ -33,5 +64,6 @@ function useProvideBasket() {
         items,
         restaurant,
         addToBasket,
+        show
     }
 };

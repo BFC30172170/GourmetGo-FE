@@ -49,8 +49,6 @@ function Login() {
                             <button type='submit' className='bg-red-500 col-span-2 p-4 rounded-lg text-lg font-bold' onClick={(e)=>{handleLogin(e,email,password)}}>Submit</button>
                         </form>
                     </div>
-
-
                 </section>
             </main>
         </div>

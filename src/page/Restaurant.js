@@ -1,4 +1,5 @@
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
+import Basket from 'components/Basket';
 import { useBasket } from 'lib/basket';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
@@ -39,21 +40,7 @@ function Restaurant() {
                     <h1 className="text-4xl font-bold tracking-tight">{restaurant?.name}</h1>
                 </section>
                 <section className="hidden lg:block col-span-1 row-span-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg h-fit ">
-                    <h3 type="button" className="flex w-full items-center justify-between pb-2 text-sm" aria-controls="filter-section-0" aria-expanded="false">
-                        <span className="font-bold">Basket - {basket?.restaurant?.name}</span>
-                    </h3>
-                    <div className='flex flex-col'>
-                        {basket.items.map((item, i) => {
-                            return (
-                                <Link to="/basket" class="flex px-1 py-2 text-sm justify-between">
-                                    <p>{item.name}</p>
-                                    <p>£{item.price}</p>
-                                </Link>
-                            )
-                        })
-                        }
-                        <Link to="/checkout" className="py-2 mt-4 text-sm bg-red-500 text-gray-50 rounded-lg mx-auto w-full text-center duration-300 hover:scale-105 hover:bg-red-600">Checkout</Link>
-                    </div>
+                    <Basket/>
                 </section>
 
                 <section className="flex items-baseline justify-between col-span-3">

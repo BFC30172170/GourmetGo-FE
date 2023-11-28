@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Offline = () => {
   	const [isOnline, setIsOnline] = useState(navigator.onLine);
-    const [active, setActive] = useState(true);
+    const [active, setActive] = useState(false);
 
     let timer;
   		
@@ -22,7 +22,7 @@ const Offline = () => {
               clearTimeout(timer);
               timer = setTimeout(() => {
                   setActive(false);
-              }, 4000);
+              }, 10000);
     	}
 	
     	window.addEventListener("online", onlineHandler);

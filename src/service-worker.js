@@ -92,7 +92,7 @@ registerRoute(
 );
 
 registerRoute(
-  ({url}) => url.origin === 'https://api-server',
+  ({url}) => url.origin === 'https://api',
   new NetworkOnly({
     plugins: [bgSync]
   }),

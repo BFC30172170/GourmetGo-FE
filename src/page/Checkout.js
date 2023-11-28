@@ -1,4 +1,5 @@
 import { CreditCardIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
+import Basket from 'components/Basket';
 import { useEffect, useState } from 'react';
 
 
@@ -162,6 +163,7 @@ function Checkout() {
                                     <label htmlFor='cardSecurityCode'>cvc</label>
                                     <input type="text" value={cardSecurityCode} onChange={(e) => { setCardSecurityCode(e.target.value) }} className="w-full rounded-lg bg-white dark:bg-black p-2 pl-4" id="cardSecurityCode" />
                                 </div>
+                                <Basket/>
                             </form>
                             : ''}
 
