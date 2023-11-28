@@ -1,10 +1,10 @@
 import { CreditCardIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
 import Basket from 'components/Basket';
+import { TabIcon, TabsLine, TabsWrapper, Tab } from 'components/Tabs';
 import { useEffect, useState } from 'react';
 
 
 function Checkout() {
-    const [menu, setMenu] = useState('confirm order');
     const [fullName, setFullName] = useState('');
     const [houseNumber, setHouseNumber] = useState('');
     const [streetName, setStreetName] = useState('');
@@ -12,33 +12,7 @@ function Checkout() {
     const [postcode, setPostcode] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [cardSecurityCode, setCardSecurityCode] = useState('');
-
-    const menus = [
-        {
-            step: 1,
-            name: 'confirm order'
-        },
-        {
-            step: 2,
-            name: 'preparing order'
-        },
-        {
-            step: 3,
-            name: 'ready to collect'
-        },
-        {
-            step: 4,
-            name: 'at the restaurant'
-        },
-        {
-            step: 5,
-            name: 'out for delivery'
-        },
-        {
-            step: 6,
-            name: 'delivered'
-        }
-    ];
+    const [currentTab, setCurrentTab] = useState(0);
 
     const getUser = async () => {
         // Fetch User
@@ -92,42 +66,59 @@ function Checkout() {
                     <div className="flex bg-gray-100 dark:bg-gray-900 p-4 rounded-lg max-w-7xl w-full mx-auto">
                         <div className='flex sm:flex-col w-full mx-auto'>
                             <h3 className="font-bold hidden sm:block">Progress</h3>
-                            <div className="flex sm:flex-col justify-around w-full" >
-                                {menus.map((m, i) => {
-                                    return (
-                                        <>
-                                            {/* Desktop */}
-                                            <div onClick={() => setMenu(m.name)} className='relative items-center justify-start hidden sm:flex h-6 mt-2'>
-                                                <div className={`w-6 h-6 rounded-full duration-300 border dark:bg-gray-700 bg-gray-300 border-4 ${m.name == menu ? 'border-red-500' : 'dark:border-gray-700 border-gray-300'}`}>
-
-                                                </div>
-                                                <div className='pl-2'>
-                                                    {m.name}
-                                                </div>
-                                            </div>
-                                            {/* Mobile */}
-                                            <div onClick={() => setMenu(m.name)} className='flex sm:hidden w-full mx-auto'>
-                                                <div className={`flex h-12 w-12 rounded-full duration-300 mx-auto border dark:bg-gray-700 bg-gray-300 border-8 ${m.name == menu ? 'border-red-500' : 'border-0 dark:border-gray-700 border-gray-300'}`}>
-
-                                                </div>
-                                                <p className='flex pl-2 pt-2 hidden sm:block'>
-                                                    {m.name}
-                                                </p>
-                                            </div>
-                                        </>
-                                    )
-                                })}
-                            </div>
+                            <TabsWrapper>
+                                <TabsLine max={5} current={currentTab} />
+                                <TabIcon
+                                    index={0}
+                                    name='confirm order'
+                                    operation={() => setCurrentTab(0)}
+                                    icon={<UserIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 0}
+                                />
+                                <TabIcon
+                                    index={1}
+                                    name='preparing order'
+                                    operation={() => setCurrentTab(1)}
+                                    icon={<HomeIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 1}
+                                />
+                                <TabIcon
+                                    index={2}
+                                    name='ready to collect'
+                                    operation={() => setCurrentTab(2)}
+                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 2}
+                                />
+                                <TabIcon
+                                    index={3}
+                                    name='at the restaurant'
+                                    operation={() => setCurrentTab(3)}
+                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 3}
+                                />
+                                <TabIcon
+                                    index={4}
+                                    name='out for delivery'
+                                    operation={() => setCurrentTab(4)}
+                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 4}
+                                />
+                                <TabIcon
+                                    index={5}
+                                    name='delivered'
+                                    operation={() => setCurrentTab(5)}
+                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    active={currentTab >= 5}
+                                />
+                            </TabsWrapper>
                         </div>
                     </div>
                 </section>
-                <h2 className='text-xl ml-2 w-full sm:hidden'>{menu}</h2>
-
                 {/* Form Section */}
-                <section className='col-span-4 sm:col-span-3'>
-                    <div className=" w-full p-4 max-w-7xl mx-auto transition duration-300 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
-                        {/* Confirm Order form */}
-                        {menu == 'confirm order' ?
+                <Tab
+                    index={0}
+                    active={currentTab == 0}
+                >
                             <form className="w-full mx-auto grid grid-cols-4 gap-4 bg-gray-100 dark:bg-gray-900 rounded-lg">
                                 {/* Username Input */}
                                 <div className='w-full col-span-4'>
@@ -165,34 +156,42 @@ function Checkout() {
                                 </div>
                                 <Basket/>
                             </form>
-                            : ''}
+                            </Tab>
+                            <Tab
+                    index={1}
+                    active={currentTab == 1}
+                >
 
-                        {/* Confirm Order form */}
-                        {menu == 'preparing order' ?
                             <div className='animate-pulse'>PREPARING ORDER</div>
-                            : ''}
+                            </Tab>
+                            <Tab
+                    index={2}
+                    active={currentTab == 2}
+                >
 
-                        {menu == 'ready to collect' ?
                             <div className='animate-pulse'>READY TO COLLECT</div>
-                            : ''}
-
-                        {menu == 'at the restaurant' ?
+                            </Tab>
+                            <Tab
+                    index={3}
+                    active={currentTab == 3}
+                >
                             <div className='animate-pulse'>DRIVER AT RESTAURANT</div>
-                            : ''}
-
-                        {menu == 'out for delivery' ?
+                            </Tab>
+                            <Tab
+                    index={4}
+                    active={currentTab == 4}
+                >
                             <div className='animate-pulse'>ON THE WAY</div>
-                            : ''}
-
-                        {menu == 'delivered' ?
+                            </Tab>
+                            <Tab
+                    index={5}
+                    active={currentTab == 5}
+                >
                             <div className='animate-pulse'>DELIVERED</div>
-                            : ''}
-
-                    </div>
+</Tab>
 
 
 
-                </section>
             </main>
         </div>
 
