@@ -26,7 +26,7 @@ function HomePage() {
 
 
     return (
-        <div class="relative text-gray-900 dark:text-gray-50 pt-64 mx-auto transition duration-300 h-screen w-screen">
+        <div class="relative text-gray-900 dark:text-gray-50 pt-64 mx-auto transition duration-300 h-screen">
             <div className="max-w-7xl mx-auto  p-6 lg:px-8">
                 <h1 class="text-4xl tracking-tight sm:text-6xl font-bold">Gourmet <span className="text-red-600">Go</span></h1>
                 <p class="mt-2 mb-2 text-lg leading-8">Order delivery near you.</p>
