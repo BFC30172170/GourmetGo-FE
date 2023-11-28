@@ -4,6 +4,7 @@ import { PencilIcon } from '@heroicons/react/24/solid';
 
 import { useLocation } from 'lib/location';
 import { haversineDistance } from 'utils/distance';
+import Tile from 'components/Tile';
 
 function RestaurantIndex() {
     const [restaurants, setRestaurants] = useState([]);
@@ -88,9 +89,9 @@ function RestaurantIndex() {
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid grid-cols-3 lg:grid-cols-4 gap-4">
                 <div className='hidden lg:block col-span-1 row-span-1'></div>
                 {/* Title */}
-                <section className='col-span-3'> 
-                <h1 className="text-4xl font-bold tracking-tight flex items-center">
-                    Restaurants near <span className='text-red-500 flex items-center gap-1 pl-4'><Link to="/" className='duration-300 hover:-rotate-12 hover:scale-110'><PencilIcon className='w-6 h-6' /></Link>{location.area}, {location.postcode}</span>
+                <section className='col-span-3'>
+                    <h1 className="text-md sm:text-3xl font-bold tracking-tight flex items-center">
+                        Restaurants near <span className='text-red-500 flex items-center gap-1 pl-2 sm:pl-4'><Link to="/" className='duration-300 hover:-rotate-12 hover:scale-110'><PencilIcon className='w-6 h-6' /></Link>{location.area}, {location.postcode}</span>
                     </h1>
                 </section>
 
@@ -132,19 +133,15 @@ function RestaurantIndex() {
                 <section className='col-span-3'>
                     <div className=" col-span-3 w-full p-4 max-w-7xl mx-auto transition duration-300">
                         <div className="w-full mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4">
-                            {restaurants.map((restaurant, i) => {
-                                return (
-                                    <Link to={`/restaurants/${restaurant.id}`} className="group" key={i}>
-                                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-500 xl:aspect-h-8 xl:aspect-w-7">
-                                            <img src={restaurant.image} alt={'food from ' + restaurant.name} className="h-full w-full object-cover object-center duration-300 group-hover:scale-105 group-hover:-rotate-1" />
-                                        </div>
-                                        <div className="flex justify-between mt-4 font-medium group-hover:text-red-500 duration-300">
-                                            <h3 className="text-sm">{restaurant.name}</h3>
-                                            <p className="text-sm text-right">{haversineDistance([restaurant.longitude, restaurant.latitude], [location.longitude, location.latitude])}km away</p>
-                                        </div>
-                                    </Link>
-                                )
-                            })}
+                            {restaurants.map((restaurant, i) => (
+                                <Tile
+                                    key={i}
+                                    link={`/restaurants/${restaurant.id}`}
+                                    image={restaurant.image}
+                                    title={restaurant.name}
+                                    subtitle={haversineDistance([restaurant.longitude, restaurant.latitude], [location.longitude, location.latitude]) + 'km away'}
+                                />
+                            ))}
                         </div>
                     </div>
 
