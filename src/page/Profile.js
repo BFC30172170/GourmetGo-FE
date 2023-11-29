@@ -81,21 +81,21 @@ function Profile() {
                                     index={0}
                                     name='profile'
                                     operation={() => setCurrentTab(0)}
-                                    icon={<UserIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<UserIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab == 0}
                                 />
                                 <TabIcon
                                     index={1}
                                     name='address'
                                     operation={() => setCurrentTab(1)}
-                                    icon={<HomeIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<HomeIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab == 1}
                                 />
                                 <TabIcon
                                     index={2}
                                     name='payment'
                                     operation={() => setCurrentTab(2)}
-                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<CreditCardIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab == 2}
                                 />
                             </TabsWrapper>

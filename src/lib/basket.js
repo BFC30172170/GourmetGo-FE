@@ -42,13 +42,13 @@ function useProvideBasket() {
                 {items.map((item, i) => {
                     total += item?.price * item?.count;
                     return (
-                        <div class="flex py-2 px-1 text-sm justify-between">
+                        <div className="flex py-2 px-1 text-sm justify-between">
                             <p>{item?.count} * {item.name}</p>
                             <p>£{item?.price * item?.count}</p>
                         </div>
                     )
                 })}
-                <div class="flex py-2 text-sm justify-between border-t-2 border-gray-50/30">
+                <div className="flex py-2 text-sm justify-between border-t-2 border-gray-50/30">
                     <p className='font-bold'>total</p>
                     <p>£{total}</p>
                 </div>

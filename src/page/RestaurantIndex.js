@@ -98,14 +98,14 @@ function RestaurantIndex() {
                 {/* Category sidebar */}
                 <section aria-labelledby="products-heading" className="hidden lg:block col-span-1 row-span-4 rounded-2xl  ">
                     <form className=" bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
-                        <h3 className="sr-only">Categories</h3>
+                        <h2 className="sr-only">Categories</h2>
                         <div>
-                            <h3 className="-my-3 flow-root">
+                            <h2 className="-my-3 flow-root">
 
                                 <button type="button" className="flex w-full items-center justify-between py-3 text-sm  hover:" aria-controls="filter-section-0" aria-expanded="false">
                                     <span className="font-bold">Categories</span>
                                 </button>
-                            </h3>
+                            </h2>
 
                             <div className="pt-6" id="filter-section-0">
                                 <div className="space-y-4">

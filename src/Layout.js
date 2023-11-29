@@ -61,17 +61,17 @@ function Layout() {
             <Outlet />
 
             <footer className='h-32 w-full'>
-                <div class="w-full bg-gray-100 dark:bg-gray-900 transition duration-300  mx-auto p-4 md:py-8">
-                    <div class="sm:flex sm:items-center sm:justify-between">
+                <div className="w-full bg-gray-100 dark:bg-gray-900 transition duration-300  mx-auto p-4 md:py-8">
+                    <div className="sm:flex sm:items-center sm:justify-between">
                         <Logo />
-                        <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                        <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                             <li>
-                                <a href="https://github.com/BFC30172170/GourmetGo-FE" class="hover:underline me-4 md:me-6">Github</a>
+                                <a href="https://github.com/BFC30172170/GourmetGo-FE" className="hover:underline me-4 md:me-6">Github</a>
                             </li>
                         </ul>
                     </div>
-                    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-                    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <p className='inline'>GourmetGo™</p>. All Rights Reserved.</span>
+                    <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                    <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <p className='inline'>GourmetGo™</p>. All Rights Reserved.</span>
                 </div>
             </footer>
 
