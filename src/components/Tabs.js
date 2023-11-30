@@ -12,19 +12,18 @@ const TabsWrapper = ({ children }) => {
 const TabsLine = ({ max, current }) => {
     const [percent, setPercent] = useState('w-[100%]')
     useEffect(() => {
+        // Get the percent completion, and set this to the line indicator with.
         let p = (current / max * 100)
         p = p.toFixed(0);
         if (p == 0) p = 1;
-        //p = `w-[${p}%]`;
-        console.log(p);
         setPercent(p);
     }, [current, max]);
 
     return (
         // Back line
-        <div className='absolute sm:hidden z-0 left-0 right-0 top-0 bottom-0 mx-2 my-auto h-4 bg-gray-700 rounded-lg'>
+        <div className='absolute sm:hidden z-0 left-0 right-0 top-0 bottom-0 mx-2 my-auto h-3 bg-gray-700 rounded-lg'>
             {/* Front Indicator Line */}
-            <div className={`duration-500 absolute sm:hidden z-10 left-0 top-0 origin-left bottom-0 ml-1 mr-1 my-auto h-4 bg-red-500 rounded-lg`} style={{width:`${percent}%`}} />
+            <div className={`duration-500 absolute sm:hidden z-10 left-0 top-0 origin-left bottom-0 ml-1 mr-1 my-auto h-3 bg-red-500 rounded-lg`} style={{width:`${percent}%`}} />
         </div>
     )
 }
@@ -42,7 +41,7 @@ const TabIcon = ({ name, icon, operation, active }) => {
                 </div>
             </div>
             {/* Mobile */}
-            <div onClick={() => operation()} className={`z-10 flex sm:hidden h-16 w-16 rounded-full duration-300 border dark:bg-gray-700 bg-gray-300 border-8 cursor-pointer hover:scale-105 active:scale-125 ${active ? 'border-red-500' : 'border-0 dark:border-gray-700 border-gray-300'}`}>
+            <div onClick={() => operation()} className={`z-10 flex justify-center items-center sm:hidden h-10 w-10 xs:h-16 xs:w-16 rounded-full duration-300 border dark:bg-gray-700 bg-gray-300 border-8 cursor-pointer hover:scale-105 active:scale-125 ${active ? 'border-red-500' : 'border-0 dark:border-gray-700 border-gray-300'}`}>
                 {icon}
             </div>
         </>

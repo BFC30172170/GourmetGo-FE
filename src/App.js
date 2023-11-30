@@ -27,22 +27,22 @@ function App() {
         <AuthProvider>
           <BasketProvider>
             <ThemeProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<Layout/>}>
-              <Route index element={<Homepage />} />
-              <Route path="restaurants" element={<RestaurantIndex />} />
-              <Route path="restaurants/:id" element={<Restaurant/>} />
-              <Route path="signup" element={<Signup/>}/>
-              <Route path="profile" element={<Profile/>}/>
-              <Route path="login" element={<Login/>}/>
-              <Route path="checkout" element={<Checkout/>}/>
-              </Route>
-            </Routes>
-          </Router>
-          </ThemeProvider>
+              <Router>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Homepage />} />
+                    <Route path="restaurants" element={<RestaurantIndex />} />
+                    <Route path="restaurants/:id" element={<Restaurant />} />
+                    <Route path="signup" element={<Signup />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="login" element={<Login />} />
+                    <Route path="checkout" element={<Checkout />} />
+                  </Route>
+                </Routes>
+              </Router>
+            </ThemeProvider>
           </BasketProvider>
-          </AuthProvider>
+        </AuthProvider>
       </LocationProvider>
     </div>
 

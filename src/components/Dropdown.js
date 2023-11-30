@@ -34,8 +34,8 @@ const Dropdown = ({icon, content}) => {
                 {icon}
             </div>
             
-            <div class={`absolute duration-300 ${dropdown ? "top-12 right-0 opacity-1" : "opacity-0 top-16 pointer-events-none"}  p-2 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-2xl border-2 border-gray-50`}>
-                <div class="px-1 flex flex-col">
+            <div className={`absolute duration-300 ${dropdown ? "top-12 right-0 opacity-1" : "opacity-0 top-16 pointer-events-none"}  p-2 bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 right-0 z-10 mt-2 w-56 origin-top-right rounded-md shadow-2xl border-2 border-gray-50`}>
+                <div className="px-1 flex flex-col">
                     {content}
                 </div>
             </div>

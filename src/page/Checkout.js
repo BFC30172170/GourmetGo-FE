@@ -1,4 +1,4 @@
-import { CreditCardIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
+import { BuildingStorefrontIcon, CheckIcon, CreditCardIcon, DocumentTextIcon, FireIcon, HomeIcon, ShoppingBagIcon, TruckIcon, UserIcon } from '@heroicons/react/24/solid';
 import Basket from 'components/Basket';
 import { TabIcon, TabsLine, TabsWrapper, Tab } from 'components/Tabs';
 import { useEffect, useState } from 'react';
@@ -72,42 +72,42 @@ function Checkout() {
                                     index={0}
                                     name='confirm order'
                                     operation={() => setCurrentTab(0)}
-                                    icon={<UserIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<DocumentTextIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 0}
                                 />
                                 <TabIcon
                                     index={1}
                                     name='preparing order'
                                     operation={() => setCurrentTab(1)}
-                                    icon={<HomeIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<FireIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 1}
                                 />
                                 <TabIcon
                                     index={2}
                                     name='ready to collect'
                                     operation={() => setCurrentTab(2)}
-                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<ShoppingBagIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 2}
                                 />
                                 <TabIcon
                                     index={3}
                                     name='at the restaurant'
                                     operation={() => setCurrentTab(3)}
-                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<BuildingStorefrontIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 3}
                                 />
                                 <TabIcon
                                     index={4}
                                     name='out for delivery'
                                     operation={() => setCurrentTab(4)}
-                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<TruckIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 4}
                                 />
                                 <TabIcon
                                     index={5}
                                     name='delivered'
                                     operation={() => setCurrentTab(5)}
-                                    icon={<CreditCardIcon className='w-8 scale-75 z-20 h-8 sm:h-4 sm:w-4 m-auto object-center' />}
+                                    icon={<HomeIcon className='w-6 scale-75 z-20 h-6 sm:h-4 sm:w-4 m-auto' />}
                                     active={currentTab >= 5}
                                 />
                             </TabsWrapper>

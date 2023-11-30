@@ -12,10 +12,10 @@ function Restaurant() {
     const basket = useBasket();
 
     const getRestaurant = async () => {
-        const res = await fetch(`https://654a0134e182221f8d524e9c.mockapi.io/Restaurants/${id}`);
+        const res = await window.fetch(`https://654a0134e182221f8d524e9c.mockapi.io/Restaurants/${id}`);
         const json = await res.json();
-        let restaurants = json;
-        setRestaurant(restaurants);
+        let restaurant = json;
+        setRestaurant(restaurant);
 
         const res2 = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/products')
         const json2 = await res2.json();
@@ -54,7 +54,7 @@ function Restaurant() {
                         <div className="w-full mx-auto grid grid-cols-1 gap-4">
                             {products.map((product, i) => {
                                 return (
-                                    <div className="group flex cursor-pointer" onClick={(e) => { basket.addToBasket(restaurant, product) }}>
+                                    <div key={i} className="group flex cursor-pointer" onClick={(e) => { basket.addToBasket(restaurant, product) }}>
                                         <div>
                                             <div className=" h-full w-16 sm:w-24 lg:w-48 overflow-hidden rounded-lg bg-gray-500">
                                                 <img src={product.image} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="h-full w-full object-cover object-center duration-300 group-hover:scale-105 group-hover:-rotate-1" />
