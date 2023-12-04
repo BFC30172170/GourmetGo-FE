@@ -1,8 +1,8 @@
 import { BuildingStorefrontIcon, CheckIcon, CreditCardIcon, DocumentTextIcon, FireIcon, HomeIcon, ShoppingBagIcon, TruckIcon, UserIcon } from '@heroicons/react/24/solid';
 import Basket from 'components/Basket';
+import PizzaGame from 'components/PizzaGame';
 import { TabIcon, TabsLine, TabsWrapper, Tab } from 'components/Tabs';
 import { useEffect, useState } from 'react';
-
 
 function Checkout() {
     const [fullName, setFullName] = useState('');
@@ -161,8 +161,7 @@ function Checkout() {
                     index={1}
                     active={currentTab == 1}
                 >
-
-                            <div className='animate-pulse'>PREPARING ORDER</div>
+                            <PizzaGame/>
                             </Tab>
                             <Tab
                     index={2}
