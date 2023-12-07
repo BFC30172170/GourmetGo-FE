@@ -9,12 +9,13 @@ import pizzapepper from 'pizza-pepper.svg';
 const PizzaGame = () => {
     const [toppings, setToppings] = useState([]);
 
-    const addTopping = (topping) => {
+    const addTopping = (topping,size=[20,40]) => {
         let newToppings = toppings.slice()
+        console.log(size);
         newToppings.push({
-            x: Math.random() * 75 + 5,
-            y: Math.random() * 75 + 5,
-            size: Math.random() * 20 + 50,
+            x: 45,
+            y: 45,
+            size: (Math.random() * size[ 1]-size[0]) + size[0],
             angle: Math.random() * 360,
             img: topping
         })
@@ -28,7 +29,7 @@ const PizzaGame = () => {
     return (
         <div className='p-6'>
             Preparing your order
-            <div id="pizza" className='relative rounded-full overflow-hidden max-w-sm'>
+            <div id="pizza" className='relative rounded-full max-w-sm duration-1000'>
                 {toppings.map((topping, i) => {
                     return (
                         <PizzaTopping pos={topping} />
@@ -39,19 +40,19 @@ const PizzaGame = () => {
             <div className='flex gap-2'>
 
             <img className="w-12 h-12" src={pizzasauce}
-                onClick={() => { addTopping(pizzasauce) }}
+                onClick={() => { addTopping(pizzasauce,[400,500]) }}
             />
 
             <img className="w-12 h-12" src={pizzapepperoni} 
-            onClick={() => {addTopping(pizzapepperoni)}
+            onClick={() => {addTopping(pizzapepperoni,[30,50])}
             } />
 
             <img className="w-12 h-12" src={pizzacheese} 
-            onClick={() => {addTopping(pizzacheese)}
+            onClick={() => {addTopping(pizzacheese,[50,100])}
             } />
 
             <img className="w-12 h-12" src={pizzapepper} 
-            onClick={() => {addTopping(pizzapepper)}
+            onClick={() => {addTopping(pizzapepper,[50,100])}
             } />
 
             </div>
@@ -61,13 +62,13 @@ const PizzaGame = () => {
     )
 }
 
+let maxZ = 0;
+
 const PizzaTopping = ({ pos }) => {
     const [position,setPosition] = useState(pos);
-    let maxZ = 0;
     console.log(position);
     let pos1, pos2, pos3, pos4 = 0;
     const topping = useRef();
-    const wheelTimeout = useRef()
 
     const dragMouseDown = (e) => {
         e.preventDefault();
@@ -76,6 +77,7 @@ const PizzaTopping = ({ pos }) => {
         pos4 = e.clientY;
         maxZ++;
         topping.current.style.zIndex = maxZ+1;
+        setPosition({...position, size: topping.current.width+50})
         document.onmouseup = closeDragElement;
         document.onwheel = elementWheel;
         document.addEventListener('wheel',elementWheel,{passive:false})
@@ -110,13 +112,14 @@ const PizzaTopping = ({ pos }) => {
 
     const closeDragElement = () => {
         /* stop moving when mouse button is released:*/
+        setPosition({...position, size: topping.current.width-50})
         document.onmouseup = null;
         document.onmousemove = null;
         document.onwheel = null;
         document.removeEventListener('wheel',elementWheel);
     }
     return (
-        <img draggable className="absolute w-12 h-12 origin-center duration-600" style={{ top: `${position.y}%`, left: `${position.x}%`,width:`${position.size}px`,height:`${position.size}px`,transform:`translate(-${position.size/2}px,-${position.size/2}px) rotate(${position.angle}deg)`,transitionProperty:'height',transitionDuration:'300ms' }} src={position.img}
+        <img draggable className="absolute w-12 h-12 origin-center duration-600" style={{ top: `${position.y}%`, left: `${position.x}%`,width:`${position.size}px`,height:`${position.size}px`,transform:`translate(-${position.size/2}px,-${position.size/2}px) rotate(${position.angle}deg)`,transitionProperty:'height,width,transform',transitionDuration:'300ms',zIndex:maxZ }} src={position.img}
             onMouseDown={(e) => { dragMouseDown(e) }}
             ref={topping}
         />
