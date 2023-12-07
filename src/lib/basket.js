@@ -22,8 +22,8 @@ function useProvideBasket() {
         if (restaurant?.id !== itemRestaurant?.id) {
             newItems = [];
         }
-        if (newItems.filter(i => i.id == item?.id).length > 0) {
-            let newItem = items.find(i => i.id == item?.id);
+        if (newItems.filter(i => i.name == item?.name).length > 0) {
+            let newItem = items.find(i => i.name == item?.name);
             newItem.count = newItem.count + 1;
         } else {
             newItems.push({ count: 1, ...item })
