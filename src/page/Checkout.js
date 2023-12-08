@@ -1,5 +1,7 @@
 import { BuildingStorefrontIcon, CheckIcon, CreditCardIcon, DocumentTextIcon, FireIcon, HomeIcon, ShoppingBagIcon, TruckIcon, UserIcon } from '@heroicons/react/24/solid';
 import Basket from 'components/Basket';
+import MapComp from 'components/Map';
+import Map from 'components/Map';
 import PizzaGame from 'components/PizzaGame';
 import { TabIcon, TabsLine, TabsWrapper, Tab } from 'components/Tabs';
 import { useEffect, useState } from 'react';
@@ -161,7 +163,7 @@ function Checkout() {
                     index={1}
                     active={currentTab == 1}
                 >
-                            <PizzaGame/>
+                            <div className='animate-pulse'>PREPATING ORDER</div>
                             </Tab>
                             <Tab
                     index={2}
@@ -180,7 +182,7 @@ function Checkout() {
                     index={4}
                     active={currentTab == 4}
                 >
-                            <div className='animate-pulse'>ON THE WAY</div>
+                            <MapComp rCoords={[-2.846396,53.857913]}/>
                             </Tab>
                             <Tab
                     index={5}
