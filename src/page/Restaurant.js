@@ -17,6 +17,16 @@ function Restaurant() {
 
     const getRestaurant = async () => {
         const [data,err] = await apiClient.restaurant.getByID(id);
+
+        const res = await fetch(`https://api.postcodes.io/postcodes/${data.postcode}`);
+        const json = await res.json();
+        console.log(data);
+        console.log(json);
+        if (json.status == 200) {
+            data.longitude = json.result.longitude
+            data.latitude = json.result.latitude
+        }
+
         setRestaurant(data);
 
         let products = data.menu
