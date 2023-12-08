@@ -64,7 +64,7 @@ function Layout() {
 
             <Outlet />
 
-            <footer className='h-32 w-full'>
+            <footer className='h-32 pt-16 w-full bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 '>
                 <div className="w-full bg-gray-100 dark:bg-gray-900 transition duration-300  mx-auto p-4 md:py-8">
                     <div className="sm:flex sm:items-center sm:justify-between">
                         <Logo />
