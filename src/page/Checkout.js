@@ -1,5 +1,6 @@
 import { BuildingStorefrontIcon, DocumentTextIcon, FireIcon, HomeIcon, ShoppingBagIcon, TruckIcon} from '@heroicons/react/24/solid';
 import Button from 'components/Button';
+import Logo from 'components/Logo';
 import MapComp from 'components/Map';
 import { TabIcon, TabsLine, TabsWrapper, Tab } from 'components/Tabs';
 import useApiClient from 'lib/api';
@@ -191,32 +192,46 @@ function Checkout() {
                         index={1}
                         active={currentTab == 1}
                     >
-                        <div className='animate-pulse'>PREPARING ORDER</div>
+                                <div className='flex flex-col items-center justify-center  min-h-64 py-24'>
+                        <FireIcon className='animate-fire text-red-500 h-32 w-32'/>
+                        <p className='text-2xl font-bold animate-pulse'>Preparing your order now</p>
+                        </div>
                     </Tab>
                     <Tab
                         index={2}
                         active={currentTab == 2}
                     >
-
-                        <div className='animate-pulse'>READY TO COLLECT</div>
+                                <div className='flex flex-col items-center justify-center  min-h-64 py-24'>
+                        <ShoppingBagIcon className='animate-bounce text-red-500 h-32 w-32'/>
+                        <p className='text-2xl font-bold animate-bounce'>Ready to collect</p>
+                        </div>
                     </Tab>
                     <Tab
                         index={3}
                         active={currentTab == 3}
                     >
-                        <div className='animate-pulse'>DRIVER AT RESTAURANT</div>
+                        <div className='flex flex-col items-center justify-center  min-h-64 py-24'>
+                        <img  className='animate-pulse text-red-500 h-32 w-32 rounded-full border-4 border-red-500' src="https://images.unsplash.com/photo-1606398862107-333565d648a0?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+                        <p className='text-2xl font-bold mt-8 '>Driver Assigned</p>
+                        <p className='text-xl font-bold'><span className='text-red-500'>{['Simon','Mary','Patrick'][Math.floor(Math.random()*3)]}</span> Has your order now</p>
+                        </div>
                     </Tab>
                     <Tab
                         index={4}
                         active={currentTab == 4}
-                    >
+                    >   {basket?.restaurant?.longitude !== 0 ?
                         <MapComp rCoords={[basket?.restaurant?.longitude, basket?.restaurant?.latitude]} />
+                        : <p className='bg-gray-50 dark:bg-gray-950 mb-2 rounded-2xl p-4 text-2xl'>Arriving at <span className='text-red-500 font-bold'>16:00</span></p>}
                     </Tab>
                     <Tab
                         index={5}
                         active={currentTab == 5}
                     >
-                        <div className='animate-pulse'>DELIVERED</div>
+                        <div className='flex flex-col items-center justify-center min-h-64 py-24'>
+                        <img src="/logo192.png"/>
+                        <p className='text-2xl font-bold '>Order Delivered</p>
+                        <p className='text-xl font-bold'>Thankyou for using GourmetGo</p>
+                        </div>
                     </Tab>
 
 
