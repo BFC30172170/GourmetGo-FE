@@ -1,10 +1,12 @@
 import { useAuth } from 'lib/auth';
+import { useToast } from 'lib/toast';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
     const auth = useAuth();
+    const toast = useToast();
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,12 +15,9 @@ function Login() {
     const handleLogin = async (e,username,password) => {
         e.preventDefault();
         const res = await auth.login(username,password);
-        if(res.status !== 'Login Success'){
-            setError(res.status);
-        }else{
-            console.log('navigating')
-            navigate('/profile')
-        }
+        if (res !== '')
+        navigate('/profile');
+        toast.addToast({message:'Login Successful'})
     }
     
     return (

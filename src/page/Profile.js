@@ -1,9 +1,13 @@
 import { CreditCardIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
 import { Tab, TabIcon, TabsLine, TabsWrapper } from 'components/Tabs';
+import useApiClient from 'lib/api';
+import { useAuth } from 'lib/auth';
+import { useToast } from 'lib/toast';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
-function Profile() {
+const Profile = () => {
     const [menu, setMenu] = useState('profile');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -16,43 +20,62 @@ function Profile() {
     const [cardNumber, setCardNumber] = useState('');
     const [cardSecurityCode, setCardSecurityCode] = useState('');
     const [currentTab, setCurrentTab] = useState(0);
+    const auth = useAuth();
+    const toast = useToast();
+    const apiClient = useApiClient();
+    const navigate = useNavigate();
 
     const menus = ['profile', 'address', 'payment'];
 
     const getUser = async () => {
         // Fetch User
-        //const res = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/Restaurants');
-        //const json = await res.json();
-        let account = {
-            firstName: 'Brian',
-            lastName: 'Test',
-            username: 'Brian Test Account',
-            email: 'Brian@email.com',
-            houseNumber: '50a',
-            streetName: 'Test Place',
-            flatDetails: '',
-            postcode: 'FY1 1AB',
-            cardNumber: '1234 1234 1234 1234',
-            cardSecurityCode: '123'
-        }
 
-        setFirstName(account.firstName);
-        setLastName(account.lastName);
-        setUsername(account.username);
-        setEmail(account.email);
-        setHouseNumber(account.houseNumber);
-        setStreetName(account.streetName);
-        setFlatDetails(account.flatDetails);
-        setPostcode(account.postcode);
-        setCardNumber(account.cardNumber);
-        setCardSecurityCode(account.cardSecurityCode);
+        const [data, err] = await apiClient.user.getByID(auth.id);
+        console.log(data, err)
+        if (!err) {
+            const account = data;
+            setFirstName(account.firstName);
+            setLastName(account.lastName);
+            setUsername(account.username);
+            setEmail(account.email);
+            setHouseNumber(account.houseNumber);
+            setStreetName(account.streetName);
+            setFlatDetails(account.flatDetails);
+            setPostcode(account.postcode);
+            setCardNumber(account.cardNumber);
+            setCardSecurityCode(account.cardSecurityCode);
+        } else {
+            if (err.redirect !== false) {
+                navigate(err.redirect);
+            }
+            toast.addToast({ message: err.message, status: err.status })
+        }
     };
 
     const saveUser = async () => {
         // Save user
-        //const res = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/Restaurants');
-        //const json = await res.json();
+        const [data, err] = await apiClient.user.update(auth.id, {
+            firstName,
+            lastName,
+            username,
+            email,
+            houseNumber,
+            streetName,
+            flatDetails,
+            postcode,
+            cardNumber,
+            cardSecurityCode
+        });
+        if (!err) {
+            toast.addToast({ message: 'User Updated', status: 'success' })
+        } else {
+            if (err.redirect !== false) {
+                navigate(err.redirect);
+            }
+            toast.addToast({ message: err.message, status: err.status })
+        }
     }
+
 
     useEffect(() => {
         getUser();
@@ -61,7 +84,7 @@ function Profile() {
 
     return (
         <div className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-50 pt-32 min-h-screen">
-            <main className="mx-auto max-w-7xl px-4 sm:px-6 sm:px-8 grid grid-cols-3 sm:grid-cols-4 gap-4">
+            <main className="mx-auto max-w-7xl px-4 sm:px-8 grid grid-cols-3 sm:grid-cols-4 gap-4">
                 <div className='hidden sm:block col-span-1 row-span-1'></div>
                 {/* Title */}
                 <section className='col-span-3'>
