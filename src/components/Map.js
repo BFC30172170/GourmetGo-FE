@@ -90,7 +90,7 @@ const MapComp = ({ rCoords }) => {
             });
 
             map2.addLayer({
-                id: 'point',
+                id: 'points',
                 type: 'circle',
                 source: {
                     type: 'geojson',
@@ -99,34 +99,19 @@ const MapComp = ({ rCoords }) => {
                         features: [
                             {
                                 type: 'Feature',
-                                properties: {},
+                                properties: {
+                                    description:"<Strong>Your Address</Strong><p>FY3 9RQ</p>"
+                                },
                                 geometry: {
                                     type: 'Point',
                                     coordinates: [location.longitude, location.latitude]
                                 }
-                            }
-                        ]
-                    }
-                },
-                paint: {
-                    'circle-radius': 7,
-                    'circle-color': '#374151',
-                    "circle-stroke-color": "#EF4444",
-                    "circle-stroke-width": 3
-                }
-            });
-
-            map2.addLayer({
-                id: 'rPoint',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: [
+                            },
                             {
                                 type: 'Feature',
-                                properties: {},
+                                properties: {
+                                    description:"<Strong>Restaurant</Strong><p>SE1 BPB</p>"
+                                },
                                 geometry: {
                                     type: 'Point',
                                     coordinates: [rLongitude, rLatitude]
@@ -153,7 +138,9 @@ const MapComp = ({ rCoords }) => {
                         features: [
                             {
                                 type: 'Feature',
-                                properties: {},
+                                properties: {
+                                    description:"<Strong>Rider</Strong>"
+                                },
                                 geometry: {
                                     type: 'Point',
                                     coordinates: [rLongitude, rLatitude]
@@ -170,11 +157,42 @@ const MapComp = ({ rCoords }) => {
                 }
             });
 
+            const popup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false
+                });
+                 
+                map2.on('mouseenter', 'points', (e) => {
+                // Change the cursor style as a UI indicator.
+                map2.getCanvas().style.cursor = 'pointer';
+                 
+                // Copy coordinates array.
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+                 
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+                 
+                // Populate the popup and set its coordinates
+                // based on the feature found.
+                popup.setLngLat(coordinates).setHTML(description).addTo(map2);
+                });
+                 
+                map2.on('mouseleave', 'points', () => {
+                map2.getCanvas().style.cursor = '';
+                popup.remove();
+                });
+
             let i = 0;
             let route = 0;
             let duration =  json.routes[0].duration
             const timer2 = setInterval(() => {
                 i = i + 10
+                if(i < duration){
                 route = coords[Math.floor((i / duration) * coords.length)];
                 console.log(route);
                 let d = new Date(new Date().getTime() + ((duration-i)*1000));
@@ -196,6 +214,7 @@ const MapComp = ({ rCoords }) => {
                     })
                     map2.panTo(route);
                     i++;
+                }
             }, 10000);
         });
 
@@ -205,7 +224,7 @@ const MapComp = ({ rCoords }) => {
     return (
         <div>
             <p className='bg-gray-50 dark:bg-gray-950 mb-2 rounded-2xl p-4 text-2xl'>Arriving at <span className='text-red-500 font-bold'>{eta}</span></p>
-            <div ref={mapContainer} className="map-container h-96 rounded-2xl bg-gray-50 dark:bg-gray-950" />
+            <div ref={mapContainer} className="map-container h-96 rounded-2xl bg-gray-50 dark:bg-gray-950 text-gray-900" />
         </div>
     );
 
