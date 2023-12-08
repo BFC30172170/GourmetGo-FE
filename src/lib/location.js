@@ -65,7 +65,7 @@ function useProvideLocation() {
             localStorage.setItem('postcode', json.result.outcode + ' ' + json.result.incode);
             localStorage.setItem('area', json.result.admin_district);
             localStorage.setItem('longitude', json.result.longitude);
-            localStorage.setItem('latitiude', json.result.latitude);
+            localStorage.setItem('latitude', json.result.latitude);
             localStorage.setItem('confirmed', true);
         }
         return { postcode, area, latitude, longitude };

@@ -25,7 +25,7 @@ function Signup() {
                 <div className='col-span-3 flex flex-col'> 
                 <h1 className="text-4xl font-bold tracking-tight">Signup</h1>
                 </div>
-                <section className='col-span-2'>
+                <section className='col-span-3 lg:col-span-2'>
                     <div className=" w-full max-w-7xl mx-auto transition duration-300">
                         <form className="w-full mx-auto grid grid-cols-2 gap-4 bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
                             <div>

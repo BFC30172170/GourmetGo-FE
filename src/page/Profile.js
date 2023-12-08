@@ -1,4 +1,5 @@
 import { CreditCardIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
+import Button from 'components/Button';
 import { Tab, TabIcon, TabsLine, TabsWrapper } from 'components/Tabs';
 import useApiClient from 'lib/api';
 import { useAuth } from 'lib/auth';
@@ -8,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
-    const [menu, setMenu] = useState('profile');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [username, setUsername] = useState('');
@@ -24,8 +24,6 @@ const Profile = () => {
     const toast = useToast();
     const apiClient = useApiClient();
     const navigate = useNavigate();
-
-    const menus = ['profile', 'address', 'payment'];
 
     const getUser = async () => {
         // Fetch User
@@ -204,7 +202,11 @@ const Profile = () => {
                         </div>
                     </form>
                 </Tab>
-                <button type='submit' className='bg-red-500 col-span-4 sm:col-span-3 p-4 rounded-lg text-lg font-bold w-full' onClick={(e) => { saveUser() }}>Save</button>
+                <div className='col-span-3'>
+                <Button onClick={()=>{saveUser()}}>
+                    Save
+                </Button>
+                </div>
             </main>
         </div>
 

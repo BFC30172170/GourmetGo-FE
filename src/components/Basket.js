@@ -1,5 +1,6 @@
 import { useBasket } from "lib/basket";
 import { Link } from "react-router-dom";
+import Button from "./Button";
 
 const Basket = () => {
     const basket = useBasket();
@@ -22,9 +23,7 @@ const Basket = () => {
                 <p className='font-bold'>total</p>
                 <p>£{total}</p>
             </div>
-            <Link to="/checkout" className="p-2 mt-2 flex items-center justify-center bg-red-500 rounded-lg w-full duration-300 hover:scale-105 hover:bg-red-600" role="none">
-                <p className="">Checkout</p>
-            </Link>
+            <Button link="/checkout">Checkout</Button>
         </div>
     )
 }
