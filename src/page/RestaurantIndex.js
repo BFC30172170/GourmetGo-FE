@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PencilIcon } from '@heroicons/react/24/solid';
 
 import { useLocation } from 'lib/location';
 import { haversineDistance } from 'utils/distance';
 import Tile from 'components/Tile';
+import apiClient from 'lib/api';
+import { useToast } from 'lib/toast';
+import useApiClient from 'lib/api';
 
 function RestaurantIndex() {
     const [restaurants, setRestaurants] = useState([]);
@@ -12,21 +15,31 @@ function RestaurantIndex() {
     const [filters, setFilters] = useState([]);
     const [search, setSearch] = useState('');
     const location = useLocation();
+    const navigate = useNavigate();
+    const toast = useToast();
+    const apiClient = useApiClient();
 
     const getRestaurants = async () => {
         // Fetch restaurants
-        const res = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/Restaurants');
-        const json = await res.json();
-        let restaurants = json;
-        // Get only those with search term
-        restaurants = restaurants.filter((restaurant) => restaurant.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-        // If there are filters, apply them
-        if (filters.length > 0) {
-            restaurants = restaurants.filter((restaurant) => filters.includes(restaurant.category))
+        let [restaurants,err] = await apiClient.restaurant.getByRange(1000, location.postcode);
+        if(!err){
+        if (restaurants.length > 0) {
+            // Get only those with search term
+            restaurants = restaurants.filter((restaurant) => restaurant.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
+            // If there are filters, apply them
+            if (filters.length > 0) {
+                restaurants = restaurants.filter((restaurant) => filters.includes(restaurant.restaurantType))
+            }
+            //Sort by smallest distance ascending
+            restaurants.sort((a, b) => { return haversineDistance([a.longitude, a.latitude], [location.longitude, location.latitude]) - haversineDistance([b.longitude, b.latitude], [location.longitude, location.latitude]) });
+            setRestaurants(restaurants);
         }
-        //Sort by smallest distance ascending
-        restaurants.sort((a, b) => { return haversineDistance([a.longitude, a.latitude], [location.longitude, location.latitude]) - haversineDistance([b.longitude, b.latitude], [location.longitude, location.latitude]) });
-        setRestaurants(restaurants);
+        }else{
+            if (err.redirect !== false) {
+                navigate(err.redirect);
+            }
+            toast.addToast({ message: err.message, status: err.status })
+        }
     };
 
     useEffect(() => {
@@ -51,7 +64,7 @@ function RestaurantIndex() {
         //To get all distinct categories from restaurants
         //Get all the distinct categories
         let unique_values = objects
-            .map((item) => item.category)
+            .map((item) => item.restaurantType)
             .filter(
                 (value, index, current_value) => current_value.indexOf(value) === index
             );
@@ -60,7 +73,7 @@ function RestaurantIndex() {
         unique_values.forEach(cat => {
             let newCat = {};
             newCat.name = cat;
-            newCat.count = restaurants.filter((restaurant) => restaurant.category == cat).length;
+            newCat.count = restaurants.filter((restaurant) => restaurant.restaurantType == cat).length;
             cats.push(newCat);
         });
         //Then sort them descending by count
@@ -133,20 +146,22 @@ function RestaurantIndex() {
                 <section className='col-span-3'>
                     <div className=" col-span-3 w-full p-4 max-w-7xl mx-auto transition duration-300">
                         <div className="w-full mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4">
-                            {restaurants.map((restaurant, i) => (
-                                <Tile
-                                    key={i}
-                                    link={`/restaurants/${restaurant.id}`}
-                                    image={restaurant.image}
-                                    title={restaurant.name}
-                                    subtitle={haversineDistance([restaurant.longitude, restaurant.latitude], [location.longitude, location.latitude]) + 'km away'}
-                                />
-                            ))}
+                            {restaurants.map((restaurant, i) => {
+                                console.log(restaurant)
+                                return (
+                                    <Tile
+                                        key={i}
+                                        link={`/restaurants/${restaurant.id}`}
+                                        image={restaurant.image}
+                                        title={restaurant.name}
+                                        subtitle={haversineDistance([restaurant.longitude, restaurant.latitude], [location.longitude, location.latitude]) + 'km away'}
+                                    />
+                                )
+                            })}
                         </div>
                     </div>
-
-
                 </section>
+
             </main>
         </div>
 

@@ -16,6 +16,7 @@ import Signup from "page/Signup";
 import Login from "page/Login";
 import Profile from "page/Profile";
 import Checkout from "page/Checkout";
+import { ToastProvider } from "lib/toast";
 
 
 
@@ -27,6 +28,7 @@ function App() {
         <AuthProvider>
           <BasketProvider>
             <ThemeProvider>
+              <ToastProvider>
               <Router>
                 <Routes>
                   <Route path="/" element={<Layout />}>
@@ -40,6 +42,7 @@ function App() {
                   </Route>
                 </Routes>
               </Router>
+              </ToastProvider>
             </ThemeProvider>
           </BasketProvider>
         </AuthProvider>

@@ -3,6 +3,9 @@ import Basket from 'components/Basket';
 import { useBasket } from 'lib/basket';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
+import apiClient from 'lib/api';
+import useApiClient from 'lib/api';
+
 
 function Restaurant() {
     const [restaurant, setRestaurant] = useState();
@@ -10,17 +13,15 @@ function Restaurant() {
     const [search, setSearch] = useState('');
     const { id } = useParams();
     const basket = useBasket();
+    const apiClient = useApiClient();
 
     const getRestaurant = async () => {
-        const res = await window.fetch(`https://654a0134e182221f8d524e9c.mockapi.io/Restaurants/${id}`);
-        const json = await res.json();
-        let restaurant = json;
-        setRestaurant(restaurant);
+        const [data,err] = await apiClient.restaurant.getByID(id);
+        setRestaurant(data);
 
-        const res2 = await fetch('https://654a0134e182221f8d524e9c.mockapi.io/products')
-        const json2 = await res2.json();
-        let products = json2;
-        products = products.filter((product) => product.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
+        let products = data.menu
+        console.log(products);
+        products = products.filter((product) => product?.name?.toLowerCase().indexOf(search.toLowerCase()) > -1)
         setProducts(products);
     };
 
@@ -54,10 +55,10 @@ function Restaurant() {
                         <div className="w-full mx-auto grid grid-cols-1 gap-4">
                             {products.map((product, i) => {
                                 return (
-                                    <div key={i} className="group flex cursor-pointer" onClick={(e) => { basket.addToBasket(restaurant, product) }}>
+                                    <div key={i} className="group flex cursor-pointer" onClick={(e) => { basket.addToBasket(restaurant, product); }}>
                                         <div>
                                             <div className=" h-full w-16 sm:w-24 lg:w-48 overflow-hidden rounded-lg bg-gray-500">
-                                                <img src={product.image} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="h-full w-full object-cover object-center duration-300 group-hover:scale-105 group-hover:-rotate-1" />
+                                                <img src={product.image || "https://www.bookmychefs.com/uploads/dish/default_food.jpg"} alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." className="h-full w-full object-cover object-center duration-300 group-hover:scale-105 group-hover:-rotate-1" />
                                             </div>
                                         </div>
                                         <div className="flex flex-col column justify-start p-4 pt-1">
