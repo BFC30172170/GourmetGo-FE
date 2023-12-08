@@ -21,7 +21,7 @@ function RestaurantIndex() {
 
     const getRestaurants = async () => {
         // Fetch restaurants
-        let [restaurants,err] = await apiClient.restaurant.getByRange(1000, location.postcode);
+        let [restaurants,err] = await apiClient.restaurant.getByRange(10000, location.postcode);
         if(!err){
         if (restaurants.length > 0) {
             // Get only those with search term
