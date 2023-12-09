@@ -52,8 +52,8 @@ function Restaurant() {
                     <h1 className="text-4xl font-bold tracking-tight">{restaurant?.name}</h1>
                     <Dropdown icon={<PhoneIcon className='w-6 h-6'/>} content={
                     <div className='flex flex-col'>
-                        <p>{restaurant.contactInfo}</p>
-                        <p>{restaurant.address}, {restaurant.postcode}</p>
+                        <p>{restaurant?.contactInfo}</p>
+                        <p>{restaurant?.address}, {restaurant?.postcode}</p>
                     </div>}>                      
                     </Dropdown>
                 </section>
