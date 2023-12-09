@@ -56,7 +56,7 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ url }) => url.pathname.endsWith('.png') && url.origin !== 'https://api.mapbox.com', // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
@@ -79,22 +79,22 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 registerRoute(
-  ({url}) => url.origin === 'https://654a0134e182221f8d524e9c.mockapi.io' || url.origin === 'https://api.postcodes.io',
+  ({url}) => url.origin === 'https://gogourmet-api-qe677.ondigitalocean.app' || url.origin === 'https://api.postcodes.io',
   new StaleWhileRevalidate({
-    cacheName: 'todoapiresponse',
+    cacheName: 'apiCache',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
       }),
-      new ExpirationPlugin({ maxEntries: 50 }),
+      new ExpirationPlugin({ maxEntries: 100 }),
     ],
   })
 );
 
 registerRoute(
-  ({url}) => url.origin === 'https://api',
+  ({url}) => url.origin === 'https://gogourmet-api-qe677.ondigitalocean.app',
   new NetworkOnly({
     plugins: [bgSync]
   }),
-  'POST'
+  'PUT'
 )

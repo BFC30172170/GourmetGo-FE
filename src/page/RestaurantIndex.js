@@ -152,7 +152,7 @@ function RestaurantIndex() {
                                     <Tile
                                         key={i}
                                         link={`/restaurants/${restaurant.id}`}
-                                        image={restaurant.image}
+                                        image={restaurant.imageUrl}
                                         title={restaurant.name}
                                         subtitle={haversineDistance([restaurant.longitude, restaurant.latitude], [location.longitude, location.latitude]) + 'km away'}
                                     />
