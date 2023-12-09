@@ -1,5 +1,6 @@
 import { useLocation } from 'lib/location';
-import mapboxgl, { Map, MapboxDirections } from 'mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl, { Map, MapboxDirections } from '!mapbox-gl'; // or "const mapboxgl = require('mapbox-gl');"
 import { useState, useRef, useEffect } from 'react';
 import "mapbox-gl/dist/mapbox-gl.css"
 
