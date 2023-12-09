@@ -14,14 +14,14 @@ const Basket = () => {
                 return (
                     <div className="flex justify-between px-2 py-2 my-1 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200 cursor-default">
                         <p>{item?.count} * {item.name}</p>
-                        <p>£{item?.price * item?.count}</p>
+                        <p>£{(item?.price * item?.count).toFixed(2)}</p>
                     </div>
                 )
             })}
             <hr className="opacity-50 border-gray-900 dark:border-gray-50"/>
             <div className="flex justify-between px-2 py-2 text-sm rounded-lg duration-300 dark:hover:bg-gray-800 hover:bg-gray-200 cursor-default">
                 <p className='font-bold'>total</p>
-                <p>£{total}</p>
+                <p>£{total.toFixed(2)}</p>
             </div>
             <Button link="/checkout">Checkout</Button>
         </div>
